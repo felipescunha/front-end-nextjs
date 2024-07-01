@@ -25,6 +25,7 @@ interface ProfileProps {
   public_repos: number;
   followers: number;
   following: number;
+  handleOpenFollowing: (pageNumber: number) => void;
 }
 
 const Profile: React.FC<ProfileProps> = ({
@@ -39,6 +40,7 @@ const Profile: React.FC<ProfileProps> = ({
   public_repos,
   followers,
   following,
+  handleOpenFollowing,
 }) => {
   return (
     <div className="p-4 flex flex-col justify-start items-center max-w-xl pb-2">
@@ -75,8 +77,20 @@ const Profile: React.FC<ProfileProps> = ({
           <span className="text-white font-medium mr-1 ">{followers}</span>
           <p className="text-gray-200"> followers </p>
           <span className="text-white font-medium ml-2 mr-2 "> · </span>
-          <span className="text-white font-medium">{following}</span>
-        <p className="text-gray-200">following</p>
+          { following === 0 ? (
+            <>
+             <span className="text-white font-medium">{following}</span>
+             <p className="text-gray-200 ml-1">following</p>
+            </>
+          ) : (
+            <div
+              className="flex items-center hover:cursor-pointer gap-1 border-0 hover:border-b-2"
+              onClick={() => handleOpenFollowing(1)}
+            >
+              <span className="text-white font-medium">{following}</span>
+              <p className="text-gray-200">following</p>
+            </div>
+          )}
         </div>
         {blog ? (
           <Link href={blog} className="text-white font-medium text-sm">
